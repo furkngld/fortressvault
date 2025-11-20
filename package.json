@@ -16,6 +16,7 @@
     "clean": "rm -rf packages/**/dist"
   },
   "devDependencies": {
-    "patch-package": "^8.0.1"
+    "patch-package": "^8.0.1",
+    "tsx": "^4.20.6"
   }
 }
