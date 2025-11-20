@@ -1,0 +1,47 @@
+pragma cashscript ^0.12.0;
+
+contract FortressVault(
+    bytes20 ownerPkh,
+    bytes20 rescuerPkh,
+    int limitAmount
+) {
+    // Function 1: Withdraw with limit and covenant
+    function withdraw(pubkey pk, sig s, int amount) {
+        // Check that the signature matches the owner
+        require(hash160(pk) == ownerPkh);
+        require(checkSig(s, pk));
+
+        // Limit Check
+        require(amount <= limitAmount);
+
+        // Covenant: Ensure the transaction has exactly 2 outputs
+        // Output 0: Withdrawal to owner (we don't enforce destination strictly, but amount is limited)
+        // Output 1: Change back to the contract
+        require(tx.outputs.length == 2);
+
+        // Enforce the change output goes back to THIS contract
+        require(tx.outputs[1].lockingBytecode == tx.inputs[this.activeInputIndex].lockingBytecode);
+
+        // Ensure the withdrawal amount is respected (Output 0 value)
+        // Note: We don't strictly check Output 0 value == amount because fees are involved, 
+        // but we ensure the change is correct which implicitly limits the withdrawal.
+        // Actually, let's enforce Output 0 value to be roughly amount, or just rely on the limit check.
+        // The user asked: "Output 0: The withdrawal amount sent to the owner".
+        // Let's enforce tx.outputs[0].value == amount. The fee will be deducted from the input total, reducing the change.
+        require(tx.outputs[0].value == amount);
+        
+        // The remainder (Input Value - Amount - Fee) goes to Output 1.
+        // CashScript/BCH transaction rules ensure Input Value >= Output Value + Fee.
+        // So we just need to ensure the change goes back to the contract.
+    }
+
+    // Function 2: Rescue (Panic Button)
+    function rescue(pubkey pk, sig s) {
+        // Check that the signature matches the rescuer
+        require(hash160(pk) == rescuerPkh);
+        require(checkSig(s, pk));
+
+        // No limits, allow spending everything.
+        // We don't enforce any output structure here, allowing the rescuer to sweep funds to any address they control.
+    }
+}

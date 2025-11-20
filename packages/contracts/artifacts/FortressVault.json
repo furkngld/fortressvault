@@ -1,0 +1,95 @@
+{
+  "contractName": "FortressVault",
+  "constructorInputs": [
+    {
+      "name": "ownerPkh",
+      "type": "bytes20"
+    },
+    {
+      "name": "rescuerPkh",
+      "type": "bytes20"
+    },
+    {
+      "name": "limitAmount",
+      "type": "int"
+    }
+  ],
+  "abi": [
+    {
+      "name": "withdraw",
+      "inputs": [
+        {
+          "name": "pk",
+          "type": "pubkey"
+        },
+        {
+          "name": "s",
+          "type": "sig"
+        },
+        {
+          "name": "amount",
+          "type": "int"
+        }
+      ]
+    },
+    {
+      "name": "rescue",
+      "inputs": [
+        {
+          "name": "pk",
+          "type": "pubkey"
+        },
+        {
+          "name": "s",
+          "type": "sig"
+        }
+      ]
+    }
+  ],
+  "bytecode": "OP_3 OP_PICK OP_0 OP_NUMEQUAL OP_IF OP_4 OP_PICK OP_HASH160 OP_EQUALVERIFY OP_4 OP_ROLL OP_4 OP_ROLL OP_CHECKSIGVERIFY OP_3 OP_PICK OP_ROT OP_LESSTHANOREQUAL OP_VERIFY OP_TXOUTPUTCOUNT OP_2 OP_NUMEQUALVERIFY OP_1 OP_OUTPUTBYTECODE OP_INPUTINDEX OP_UTXOBYTECODE OP_EQUALVERIFY OP_0 OP_OUTPUTVALUE OP_3 OP_ROLL OP_NUMEQUAL OP_NIP OP_NIP OP_ELSE OP_3 OP_ROLL OP_1 OP_NUMEQUALVERIFY OP_3 OP_PICK OP_HASH160 OP_ROT OP_EQUALVERIFY OP_2SWAP OP_CHECKSIG OP_NIP OP_NIP OP_ENDIF",
+  "source": "pragma cashscript ^0.12.0;\r\n\r\ncontract FortressVault(\r\n    bytes20 ownerPkh,\r\n    bytes20 rescuerPkh,\r\n    int limitAmount\r\n) {\r\n    // Function 1: Withdraw with limit and covenant\r\n    function withdraw(pubkey pk, sig s, int amount) {\r\n        // Check that the signature matches the owner\r\n        require(hash160(pk) == ownerPkh);\r\n        require(checkSig(s, pk));\r\n\r\n        // Limit Check\r\n        require(amount <= limitAmount);\r\n\r\n        // Covenant: Ensure the transaction has exactly 2 outputs\r\n        // Output 0: Withdrawal to owner (we don't enforce destination strictly, but amount is limited)\r\n        // Output 1: Change back to the contract\r\n        require(tx.outputs.length == 2);\r\n\r\n        // Enforce the change output goes back to THIS contract\r\n        require(tx.outputs[1].lockingBytecode == tx.inputs[this.activeInputIndex].lockingBytecode);\r\n\r\n        // Ensure the withdrawal amount is respected (Output 0 value)\r\n        // Note: We don't strictly check Output 0 value == amount because fees are involved, \r\n        // but we ensure the change is correct which implicitly limits the withdrawal.\r\n        // Actually, let's enforce Output 0 value to be roughly amount, or just rely on the limit check.\r\n        // The user asked: \"Output 0: The withdrawal amount sent to the owner\".\r\n        // Let's enforce tx.outputs[0].value == amount. The fee will be deducted from the input total, reducing the change.\r\n        require(tx.outputs[0].value == amount);\r\n        \r\n        // The remainder (Input Value - Amount - Fee) goes to Output 1.\r\n        // CashScript/BCH transaction rules ensure Input Value >= Output Value + Fee.\r\n        // So we just need to ensure the change goes back to the contract.\r\n    }\r\n\r\n    // Function 2: Rescue (Panic Button)\r\n    function rescue(pubkey pk, sig s) {\r\n        // Check that the signature matches the rescuer\r\n        require(hash160(pk) == rescuerPkh);\r\n        require(checkSig(s, pk));\r\n\r\n        // No limits, allow spending everything.\r\n        // We don't enforce any output structure here, allowing the rescuer to sweep funds to any address they control.\r\n    }\r\n}\r\n",
+  "debug": {
+    "bytecode": "5379009c635479a988547a547aad53797ba169c4529d51cdc0c78800cc537a9c777767537a519d5379a97b8872ac777768",
+    "sourceMap": "9:4:36:5;;;;;11:24:11:26;;:16::27:1;:8::41;12:25:12:26:0;;:28::30;;:8::33:1;15:16:15:22:0;;:26::37;:16:::1;:8::39;20:16:20:33:0;:37::38;:8::40:1;23:27:23:28:0;:16::45:1;:59::80:0;:49::97:1;:8::99;31:27:31:28:0;:16::35:1;:39::45:0;;:8::47:1;9:4:36:5;;;39::46::0;;;;41:24:41:26;;:16::27:1;:31::41:0;:8::43:1;42:25:42:30:0;:8::33:1;39:4:46:5;;3:0:47:1",
+    "logs": [],
+    "requires": [
+      {
+        "ip": 11,
+        "line": 11
+      },
+      {
+        "ip": 16,
+        "line": 12
+      },
+      {
+        "ip": 21,
+        "line": 15
+      },
+      {
+        "ip": 24,
+        "line": 20
+      },
+      {
+        "ip": 29,
+        "line": 23
+      },
+      {
+        "ip": 35,
+        "line": 31
+      },
+      {
+        "ip": 46,
+        "line": 41
+      },
+      {
+        "ip": 49,
+        "line": 42
+      }
+    ]
+  },
+  "compiler": {
+    "name": "cashc",
+    "version": "0.12.0"
+  },
+  "updatedAt": "2025-11-19T12:03:19.990Z"
+}
