@@ -14,5 +14,8 @@
     "build": "yarn workspaces run build",
     "test": "yarn workspaces run test",
     "clean": "rm -rf packages/**/dist"
+  },
+  "devDependencies": {
+    "patch-package": "^8.0.1"
   }
 }
