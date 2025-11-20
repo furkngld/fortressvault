@@ -22,7 +22,7 @@
     "prepublishOnly": "yarn test && yarn lint",
     "pretest": "yarn build:test",
     "test": "NODE_OPTIONS='--experimental-vm-modules --no-warnings' jest --forceExit",
-    "postinstall": "echo 'Skipping patch-package on Vercel'"
+    "postinstall": "echo 'Skipping patch-package on Vercel'",
     "watch": "tsc -p tsconfig.json --watch"
   },
   "dependencies": {
@@ -48,3 +48,4 @@
   }
 
 }
+
