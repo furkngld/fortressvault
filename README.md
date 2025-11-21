@@ -289,4 +289,3 @@ Special thanks to the **Bitcoin Cash Node** developers for enabling Introspectio
   <br/><br/>
   <p><i>If you find FortressVault useful, give us a ⭐ on GitHub!</i></p>
 </div>
-```
