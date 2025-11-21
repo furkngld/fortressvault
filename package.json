@@ -16,6 +16,7 @@
     "clean": "rm -rf packages/**/dist"
   },
   "devDependencies": {
+    "babel-plugin-react-compiler": "^1.0.0",
     "patch-package": "^8.0.1",
     "tsx": "^4.20.6",
     "typescript": "^5.9.3"
