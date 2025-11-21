@@ -9,7 +9,7 @@
   [![CashScript](https://img.shields.io/badge/CashScript-v0.12.0-green.svg)](https://cashscript.org/)
   [![Next.js](https://img.shields.io/badge/Next.js-16-black.svg)](https://nextjs.org/)
   
-  **[Live Demo](#) | [Documentation](#features) | [Smart Contract](packages/contracts/FortressVault.cash)**
+  **[Live Demo](https://fortressvault.vercel.app/) | [Documentation](#features) | [Smart Contract](packages/contracts/FortressVault.cash)**
 </div>
 
 ---
@@ -181,14 +181,14 @@ bchtt/
 ### Prerequisites
 - Node.js 18+ and Yarn
 - Bitcoin Cash testnet (Chipnet) wallet
-- WalletConnect Project ID ([get one free](https://cloud.walletconnect.com/))
+- WalletConnect Project ID (Optional - [get one free](https://cloud.walletconnect.com/))
 
 ### Quick Start
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/bchtt.git
-cd bchtt
+git clone https://github.com/furkngld/fortressvault.git
+cd fortressvault
 
 # Install dependencies
 yarn install
@@ -196,7 +196,7 @@ yarn install
 # Configure environment variables
 cd packages/dapp
 cp .env.example .env.local
-# Add your WalletConnect Project ID to .env.local
+# Add your WalletConnect Project ID to .env.local (Optional)
 
 # Build contracts
 yarn workspace @dapp-starter/contracts build
