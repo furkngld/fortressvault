@@ -16,7 +16,7 @@
     "build:test": "yarn clean:test && yarn compile:test",
     "clean": "rm -rf ./dist",
     "clean:test": "rm -rf ./dist-test",
-    "compile": "../../node_modules/.bin/tsx tasks/index.ts compile && tsc -p tsconfig.json",
+    "compile": "echo 'Skipping contract compilation - Using inline artifacts on frontend'",
     "compile:test": "../../node_modules/.bin/tsx tasks/index.ts compile && tsc -p tsconfig.test.json",
     "lint": "eslint . --ext .ts --ignore-path ../../.eslintignore",
     "prepublishOnly": "yarn test && yarn lint",
@@ -48,6 +48,7 @@
   }
 
 }
+
 
 
 
