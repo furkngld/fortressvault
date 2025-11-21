@@ -62,7 +62,7 @@ Built on **CashScript**, utilizing Chipnet's advanced **Introspection Covenants*
 *   This ensures the security rules persist indefinitely, transaction after transaction.
 
 ### 🏭 **Zero-Cost Vault Creation**
-Unlike EVM chains where deploying a smart wallet costs gas (e.g. Gnosis Safe), FortressVault uses a **deterministic client-side factory pattern**. Creating a vault is completely free; the contract exists mathematically and is only deployed when funded.
+*   Unlike EVM chains where deploying a smart wallet costs gas (e.g. Gnosis Safe), FortressVault uses a **deterministic client-side factory pattern**. Creating a vault is completely free; the contract exists mathematically and is only deployed when funded.
 ---
 
 ## 🚀 How It Works
@@ -88,6 +88,12 @@ Login with your Rescuer Wallet to override the protocol and retrieve everything.
 ---
 
 ## 🏗️ Technical Architecture
+
+### 🚫 No Database, No Backend, No Risk
+Competitors often rely on centralized backends to index smart contract events. FortressVault is purely client-side.
+*   **Resilience:** Zero downtime risk.
+*   **Privacy:** No user data collected.
+*   **Trust:** Verify everything on-chain.
 
 ### Smart Contract (`FortressVault.cash`)
 ```plaintext
