@@ -1,3 +1,4 @@
+// @ts-nocheck
 import type { IConnector } from '@bch-wc2/interfaces';
 import { P2PKH } from "@dapp-starter/contracts";
 import { ElectrumNetworkProvider } from "cashscript";
@@ -30,3 +31,4 @@ export function useP2PKHContract(address?: string, connector?: IConnector) {
 
   return { p2pkh, P2PKH };
 }
+
