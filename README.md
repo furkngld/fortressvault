@@ -29,18 +29,17 @@ FortressVault is a **non-custodial Bitcoin Cash (BCH) smart contract vault** tha
 
 **Sleep soundly knowing your funds have a safety limit, even if your private key is stolen.**
 
-### The Problem We Solve
+### ♟️ The Hacker's Dilemma
+Usually, if a hacker gets your private key, it's **Game Over**. They drain your funds in seconds.
+**With FortressVault, the game changes:**
 
-💸 **Hot wallets are vulnerable** - One compromised device or malicious dApp can drain your entire balance instantly.  
-🥶 **Cold wallets are inconvenient** - Moving funds in emergencies requires physical access to your hardware wallet.  
-⚖️ **No middle ground exists** - Until now.
+| Scenario | Standard Wallet 💀 | FortressVault 🛡️ |
+| :--- | :--- | :--- |
+| **Key Compromised** | Hacker has full access. | Hacker has key, but **ZERO** power to drain funds. |
+| **Transfer Attempt** | Funds gone instantly. | **BLOCKED.** Transaction rejected by network rules. |
+| **Outcome** | You lose everything. | You use **Panic Button**, move funds to cold storage. Hacker gets nothing. |
 
-### The FortressVault Solution
-
-✅ **Unbreakable Limits** - Set a maximum withdrawal amount per transaction. Even a hacker with your key cannot exceed this.  
-✅ **On-Chain Memory** - We scan the blockchain to find your vault automatically. No databases, no login accounts.  
-✅ **Panic Button** - Connect your cold wallet to bypass all limits and sweep funds instantly in an emergency.  
-✅ **Fully Non-Custodial** - You hold your keys. We never have access to your funds.
+> *"FortressVault turns a catastrophic security breach into a minor inconvenience."*
 
 ---
 
@@ -63,8 +62,7 @@ Built on **CashScript**, utilizing Chipnet's advanced **Introspection Covenants*
 *   This ensures the security rules persist indefinitely, transaction after transaction.
 
 ### 🏭 **Zero-Cost Vault Creation**
-Unlike EVM chains where deploying a smart wallet costs gas, FortressVault uses a **deterministic client-side factory pattern**. Creating a vault is completely free; the contract exists mathematically and is only deployed when funded.
-
+Unlike EVM chains where deploying a smart wallet costs gas (e.g. Gnosis Safe), FortressVault uses a **deterministic client-side factory pattern**. Creating a vault is completely free; the contract exists mathematically and is only deployed when funded.
 ---
 
 ## 🚀 How It Works
@@ -202,6 +200,43 @@ Test suite includes:
 ### ⚠️ What to Know
 - **Testnet only (Chipnet):** This is a prototype for BCH Blaze 2025.
 - **Self-Custody:** You are responsible for your Rescuer Key. If you lose both keys, funds are lost.
+
+---
+
+## 💡 Why This is the "Killer App" for Chipnet
+While other chains rely on centralized "Smart Contract Wallets" that cost gas to deploy and can be censored, **FortressVault** leverages the unique power of **BCH's UTXO Model + Introspection**:
+
+1.  **Serverless & Unstoppable:** The security rules are burned into the coins themselves (Covenants). No server can turn it off.
+2.  **Stateful UTXOs:** We use Covenants to simulate state (daily limits) on a stateless blockchain.
+3.  **User-Centric:** It hides complex crypto primitives behind a simple UI that anyone can understand.
+
+---
+
+## 🗺️ Future Roadmap
+
+FortressVault is not just a hackathon entry; it is the MVP of a comprehensive security layer for the Bitcoin Cash ecosystem.
+
+### **Phase 1: The Foundation (Completed ✅)**
+*   **Core Protocol:** Functional Limit & Rescue covenants deployed on Chipnet.
+*   **Zero-Cost Factory:** Client-side deterministic address generation.
+*   **On-Chain Registry:** Serverless config storage via `OP_RETURN`.
+
+### **Phase 2: Fortress Sentinel (Q1 2026) 👁️**
+*   **Intrusion Detection Dashboard:** A dedicated interface to visualize **failed withdrawal attempts**.
+    *   *How:* We will index mempool rejection events associated with your vault address.
+    *   *Value:* See exactly when, how much, and from where a hacker tried (and failed) to drain your wallet.
+*   **Email/Telegram Alerts:** Get notified instantly: *"Blocked: Unauthorized attempt to withdraw 50 BCH."*
+
+### **Phase 3: The "Legacy" Update (Q2 2026) ⏳**
+*   **Dead Man's Switch (Inheritance):**
+    *   If the vault sees no activity for `X` months, ownership automatically transfers to a designated heir (e.g., family member).
+    *   *Tech:* Powered by `OP_CHECKSEQUENCEVERIFY` (Relative Time-locks).
+*   **Time-Locked Allowances:** Set weekly or monthly limits (e.g., "1 BCH per week") instead of per-transaction limits.
+
+### **Phase 4: Mainnet & Mobile (Q3 2026) 🚀**
+*   **Mainnet Deployment:** Launching on BCH Mainnet immediately after the **Layla Upgrade** activation (May 2026).
+*   **Mobile App:** A dedicated mobile experience acting as a 2FA for your high-value transactions.
+*   **Hardware Integration:** Direct support for Ledger/Trezor as "Rescuer" signers within the UI.
 
 ---
 
